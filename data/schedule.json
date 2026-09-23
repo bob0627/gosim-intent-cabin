@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "note": "练习数据 · 非真实日历。演示用 HYROX 训练周程。",
+  "events": [
+    {
+      "id": "evt-mon-run",
+      "title": "轻松跑 8km",
+      "date": "2026-09-28",
+      "weekday": "周一",
+      "start": "07:00",
+      "end": "08:00",
+      "type": "有氧",
+      "location": "公园跑道"
+    },
+    {
+      "id": "evt-wed-strength",
+      "title": "力量日 · 下肢",
+      "date": "2026-09-30",
+      "weekday": "周三",
+      "start": "18:30",
+      "end": "19:45",
+      "type": "力量",
+      "location": "健身房"
+    },
+    {
+      "id": "evt-thu-intervals",
+      "title": "间歇跑 6×800m",
+      "date": "2026-10-01",
+      "weekday": "周四",
+      "start": "07:00",
+      "end": "08:15",
+      "type": "间歇",
+      "location": "田径场"
+    },
+    {
+      "id": "evt-sat-hyrox",
+      "title": "HYROX 模拟课",
+      "date": "2026-10-03",
+      "weekday": "周六",
+      "start": "09:00",
+      "end": "11:00",
+      "type": "专项",
+      "location": "训练营"
+    },
+    {
+      "id": "evt-fri-recovery",
+      "title": "恢复骑行 40min",
+      "date": "2026-10-02",
+      "weekday": "周五",
+      "start": "18:00",
+      "end": "18:50",
+      "type": "恢复",
+      "location": "室内单车"
+    }
+  ]
+}

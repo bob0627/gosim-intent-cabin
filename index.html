@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>训练日程意图舱 · GOSIM Demo</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="app-header">
+      <div>
+        <h1>训练日程意图舱</h1>
+        <p class="subtitle">GOSIM Agentic App 2026 · Idea A · v1 网页 Demo（练习数据）</p>
+      </div>
+      <div class="badge-row">
+        <span class="badge ok">Apache-2.0</span>
+        <span class="badge warn">练习数据 · 非真日历</span>
+        <span class="badge">robrix2 宿主后续接入</span>
+      </div>
+    </header>
+
+    <div id="steps" class="steps" aria-label="演示步骤"></div>
+
+    <div class="grid two">
+      <section class="card">
+        <h2>① 输入事件（样例意图）</h2>
+        <p class="muted" id="intent-source"></p>
+        <div class="intent-box" id="intent-text"></div>
+        <p class="muted" id="intent-time"></p>
+        <div class="btn-row">
+          <button type="button" class="primary" id="btn-parse">解析意图 → 生成提案卡</button>
+          <button type="button" class="ghost" id="btn-reset">重置 Demo</button>
+        </div>
+        <p class="muted" style="margin-top:10px">闭环：意图 → 提案 → 授权 → 写入 localStorage → 核验。失败态含拒绝与过期。</p>
+      </section>
+
+      <section class="card">
+        <h2>当前训练日程</h2>
+        <p class="muted">来自 <code>data/schedule.json</code>；确认后写回浏览器 localStorage。</p>
+        <ul class="event-list" id="event-list"></ul>
+      </section>
+    </div>
+
+    <section class="card proposal" id="proposal-card" style="margin-top:16px">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+        <h2 style="margin:0">② 改期提案卡</h2>
+        <span class="status-pill pending" id="proposal-status">待授权</span>
+      </div>
+      <p class="muted" id="ttl-info"></p>
+
+      <h3>Agent 解析要点</h3>
+      <ul id="parse-hits" class="muted" style="margin-top:0"></ul>
+
+      <div class="diff-row">
+        <div class="diff-pane old">
+          <div class="label-tag">旧时间</div>
+          <strong id="old-title">—</strong>
+          <div id="old-when" class="mono" style="margin-top:6px">—</div>
+        </div>
+        <div class="diff-arrow">→</div>
+        <div class="diff-pane new">
+          <div class="label-tag">新时间（提案）</div>
+          <strong>间歇跑（改期）</strong>
+          <div id="new-when" class="mono" style="margin-top:6px">—</div>
+          <div id="new-reason" class="muted" style="margin-top:6px"></div>
+        </div>
+      </div>
+
+      <div id="conflict-alert" class="alert warn hidden"></div>
+
+      <div id="edit-fields">
+        <h3>修改提案（可选）</h3>
+        <div class="grid two">
+          <div class="field">
+            <label for="edit-date">日期</label>
+            <input id="edit-date" type="date" />
+          </div>
+          <div class="field">
+            <label for="edit-weekday">星期</label>
+            <select id="edit-weekday">
+              <option>周一</option><option>周二</option><option>周三</option>
+              <option>周四</option><option>周五</option><option>周六</option><option>周日</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="edit-start">开始</label>
+            <input id="edit-start" type="time" />
+          </div>
+          <div class="field">
+            <label for="edit-end">结束</label>
+            <input id="edit-end" type="time" />
+          </div>
+        </div>
+        <div class="btn-row">
+          <button type="button" id="btn-apply-edit">应用修改到提案</button>
+        </div>
+      </div>
+
+      <div class="btn-row" id="proposal-actions">
+        <button type="button" class="primary" id="btn-confirm">确认授权 · 写入日程</button>
+        <button type="button" class="danger" id="btn-reject">拒绝</button>
+        <button type="button" class="ghost" id="btn-expire">强制过期（失败态）</button>
+      </div>
+    </section>
+
+    <div class="grid two" style="margin-top:16px">
+      <section class="card">
+        <h2>③ 结果核验</h2>
+        <div id="result-panel"></div>
+      </section>
+      <section class="card">
+        <h2>审计日志</h2>
+        <ul class="timeline" id="audit-list"></ul>
+      </section>
+    </div>
+
+    <footer class="footer-note">
+      <p><strong>no-facts：</strong>本 Demo 全部为练习数据与本地规则解析，不连接真实日历 / 邮件 / Matrix。真接入将走 robrix2 能力与授权边界，届时在 README 标注。</p>
+      <p>成员：bob0627（个人）· 宿主目标：OctoSense-org/robrix2 · 许可 Apache-2.0</p>
+    </footer>
+  </div>
+  <script src="js/app.js"></script>
+</body>
+</html>
