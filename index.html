@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>训练日程意图舱 · GOSIM Demo</title>
+  <title>训练日程意图舱 · v1.1 Step2 · GOSIM</title>
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
@@ -11,14 +11,41 @@
     <header class="app-header">
       <div>
         <h1>训练日程意图舱</h1>
-        <p class="subtitle">GOSIM Agentic App 2026 · Idea A · v1 网页 Demo（练习数据）</p>
+        <p class="subtitle">GOSIM Agentic App 2026 · Idea A · <strong>v1.1 / Step2（帝王蟹意向 · ICS 能力）</strong></p>
       </div>
       <div class="badge-row">
         <span class="badge ok">Apache-2.0</span>
-        <span class="badge warn">练习数据 · 非真日历</span>
-        <span class="badge">robrix2 宿主后续接入</span>
+        <span class="badge ok" id="badge-data">ICS 真日历读写</span>
+        <span class="badge warn">未接 Calendar.app / robrix2 授权卡</span>
       </div>
     </header>
+
+    <section class="card capability-box" style="margin-bottom:16px">
+      <h2 style="margin-top:0">能力边界（诚实声明）</h2>
+      <div class="cap-grid">
+        <div>
+          <div class="label-tag" style="color:var(--ok)">真 · 已实现</div>
+          <ul class="cap-list">
+            <li>ICS 读解析（RFC5545 VEVENT 子集）</li>
+            <li>ICS 写导出（UID 稳定 · DTSTART/DTEND 更新）</li>
+            <li>导入用户 .ics → 再走提案闭环</li>
+          </ul>
+        </div>
+        <div>
+          <div class="label-tag" style="color:var(--warn)">未接 · 勿宣称</div>
+          <ul class="cap-list">
+            <li>系统 Calendar.app / 原生日历 API</li>
+            <li>robrix2 宿主授权卡</li>
+            <li>真实消息/邮件入站</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mode-row" role="group" aria-label="日程模式">
+        <span class="muted">模式：</span>
+        <button type="button" class="mode-btn active" id="mode-ics">ICS 真日历</button>
+        <button type="button" class="mode-btn" id="mode-json">练习 JSON</button>
+      </div>
+    </section>
 
     <div id="steps" class="steps" aria-label="演示步骤"></div>
 
@@ -28,17 +55,32 @@
         <p class="muted" id="intent-source"></p>
         <div class="intent-box" id="intent-text"></div>
         <p class="muted" id="intent-time"></p>
+        <div class="field">
+          <label for="intent-paste">可选：粘贴自定义意图文本（留空则用上方样例）</label>
+          <textarea id="intent-paste" rows="2" placeholder="例如：把周四间歇跑改到周五 18:00–19:15…"></textarea>
+        </div>
         <div class="btn-row">
           <button type="button" class="primary" id="btn-parse">解析意图 → 生成提案卡</button>
+          <button type="button" class="ghost" id="btn-use-sample">用回样例意图</button>
           <button type="button" class="ghost" id="btn-reset">重置 Demo</button>
         </div>
-        <p class="muted" style="margin-top:10px">闭环：意图 → 提案 → 授权 → 写入 localStorage → 核验。失败态含拒绝与过期。</p>
+        <p class="muted" style="margin-top:10px">闭环：意图 → 提案 → 授权 → <strong>ICS 写回/导出</strong>（或练习 JSON）→ 核验。失败态含拒绝与过期。</p>
       </section>
 
       <section class="card">
         <h2>当前训练日程</h2>
-        <p class="muted">来自 <code>data/schedule.json</code>；确认后写回浏览器 localStorage。</p>
+        <p class="muted" id="schedule-source">加载中…</p>
         <ul class="event-list" id="event-list"></ul>
+        <div id="ics-tools" class="ics-tools">
+          <div class="btn-row">
+            <button type="button" class="primary" id="btn-download-ics">下载更新后的 ICS</button>
+            <label class="btn file-btn">
+              导入 ICS
+              <input type="file" id="ics-file" accept=".ics,text/calendar" hidden />
+            </label>
+          </div>
+          <p class="muted" style="margin-top:8px">下载后可拖进 Apple 日历做人工核验。导入会替换当前日程基线。</p>
+        </div>
       </section>
     </div>
 
@@ -98,7 +140,7 @@
       </div>
 
       <div class="btn-row" id="proposal-actions">
-        <button type="button" class="primary" id="btn-confirm">确认授权 · 写入日程</button>
+        <button type="button" class="primary" id="btn-confirm">确认授权 · 写回 ICS</button>
         <button type="button" class="danger" id="btn-reject">拒绝</button>
         <button type="button" class="ghost" id="btn-expire">强制过期（失败态）</button>
       </div>
@@ -116,10 +158,11 @@
     </div>
 
     <footer class="footer-note">
-      <p><strong>no-facts：</strong>本 Demo 全部为练习数据与本地规则解析，不连接真实日历 / 邮件 / Matrix。真接入将走 robrix2 能力与授权边界，届时在 README 标注。</p>
-      <p>成员：bob0627（个人）· 宿主目标：OctoSense-org/robrix2 · 许可 Apache-2.0</p>
+      <p><strong>no-facts：</strong>本 Demo 的输入意图可为练习样例；ICS 读写是真的（文件解析/导出），但<strong>不</strong>等于已写入系统日历或 robrix2。勿对外声称「已改 Apple 日历 / 已接宿主授权」。</p>
+      <p>成员：bob0627（个人）· 宿主目标：OctoSense-org/robrix2 · 许可 Apache-2.0 · v1.1 Step2</p>
     </footer>
   </div>
+  <script src="js/calendar-ics.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
