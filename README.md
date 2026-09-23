@@ -14,8 +14,9 @@
 
 ```bash
 cd gosim-intent-cabin
-python3 -m http.server 8765
-# 浏览器打开 http://127.0.0.1:8765/
+python3 -m http.server 8877
+# 浏览器打开 http://127.0.0.1:8877/
+# （若端口占用，换任意空闲端口即可）
 ```
 
 ### 方式 B：直接打开
