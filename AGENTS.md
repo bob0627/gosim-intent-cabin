@@ -24,13 +24,13 @@
 
 | 层 | Step2（本仓） | 未接 / 勿宣称 |
 |---|---|---|
-| 输入 | 样例消息（练习入口）或粘贴文本 | 真实邮件 / Matrix / robrix2 入站 |
+| 输入 | 样例消息（练习入口）或粘贴文本 | 真实邮件 / Matrix / Rinx 入站 |
 | 日程读 | **真**：`data/hyrox-training.ics` RFC5545 解析；可导入用户 `.ics` | 系统 Calendar.app 读 API |
-| 日程写 | **真**：生成更新 ICS（UID 稳定 · DTSTART/DTEND 更新 · SUMMARY 保留）并下载 | Calendar.app 写 API；robrix2 宿主授权卡 |
-| UI | 静态网页卡 | robrix2 原生小程序 |
+| 日程写 | **真**：生成更新 ICS（UID 稳定 · DTSTART/DTEND 更新 · SUMMARY 保留）并下载 | Calendar.app 写 API；Rinx（原名 robrix2）宿主授权卡 |
+| UI | 静态网页卡 | Rinx 原生小程序 |
 | 解析 | 关键词规则 + 冲突避让 | Octoscript / Agent 内环 |
 
-**硬规则：** UI、README、本文件必须标明真/未接；禁止在未接真宿主能力时宣称「已写入系统日历」或「已接 robrix2」。
+**硬规则：** UI、README、本文件必须标明真/未接；禁止在未接真宿主能力时宣称「已写入系统日历」或「已接 Rinx / robrix2」。
 
 ## 模式
 
@@ -58,12 +58,12 @@
 - 不接百度 / 农场选题  
 - 不冲 ROM / STEP3  
 - 不把完整邮箱 OAuth 当必选项  
-- 不假装已接 robrix2 日历 API  
-- 不在本机死磕无 GUI 的 robrix2 编译（见 `env-notes.md`）
+- 不假装已接 Rinx（原名 robrix2）日历 API  
+- 不在本机死磕无 GUI 的 Rinx 编译（见 `env-notes.md`）
 
 ## 扩展钩子（M4+ / 晋级）
 
 1. 提案卡样式对齐官方 AppCard。  
-2. 写入适配器：`IcsFileAdapter` → `RobrixCalendarAdapter`（待官方 API）。  
-3. 钉定 robrix2 commit 写入 README。  
+2. 写入适配器：`IcsFileAdapter` → `RinxCalendarAdapter`（待官方 API）。  
+3. 钉定 Rinx commit 写入 README（已记录 9b5e570，见 env-notes.md）。  
 4. 样例意图可切换多条。

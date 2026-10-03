@@ -1,7 +1,7 @@
 /**
  * calendar-ics.js · RFC5545 风格 VEVENT 子集（无外部依赖）
  * 能力：解析 / 序列化 UID · SUMMARY · DTSTART · DTEND · DESCRIPTION · LOCATION
- * 不做：RRULE / VALARM / 系统 Calendar.app / robrix2 宿主授权
+ * 不做：RRULE / VALARM / 系统 Calendar.app / Rinx（原名 robrix2）宿主授权
  */
 (function (global) {
   "use strict";

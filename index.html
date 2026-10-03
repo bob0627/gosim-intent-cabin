@@ -4,6 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>训练日程意图舱 · v1.1 Step2 · GOSIM</title>
+  <meta name="description" content="把教练的改期消息变成一张可授权的日历提案卡：解析意图 → 检测冲突 → 用户确认/拒绝 → 写回 ICS 并核验。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="训练日程意图舱 · Agentic 改期卡" />
+  <meta property="og:description" content="意图 → 提案 → 授权 → 写回 ICS → 核验；含拒绝/过期/冲突失败态。练习数据，未接系统日历。" />
+  <meta property="og:image" content="assets/icon-512.png" />
+  <link rel="icon" type="image/svg+xml" href="assets/icon.svg" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
@@ -16,7 +22,7 @@
       <div class="badge-row">
         <span class="badge ok">Apache-2.0</span>
         <span class="badge ok" id="badge-data">ICS 真日历读写</span>
-        <span class="badge warn">未接 Calendar.app / robrix2 授权卡</span>
+        <span class="badge warn">未接 Calendar.app / Rinx 授权卡</span>
       </div>
     </header>
 
@@ -35,7 +41,7 @@
           <div class="label-tag" style="color:var(--warn)">未接 · 勿宣称</div>
           <ul class="cap-list">
             <li>系统 Calendar.app / 原生日历 API</li>
-            <li>robrix2 宿主授权卡</li>
+            <li>Rinx（原名 robrix2）宿主授权卡</li>
             <li>真实消息/邮件入站</li>
           </ul>
         </div>
@@ -158,8 +164,8 @@
     </div>
 
     <footer class="footer-note">
-      <p><strong>no-facts：</strong>本 Demo 的输入意图可为练习样例；ICS 读写是真的（文件解析/导出），但<strong>不</strong>等于已写入系统日历或 robrix2。勿对外声称「已改 Apple 日历 / 已接宿主授权」。</p>
-      <p>成员：bob0627（个人）· 宿主目标：OctoSense-org/robrix2 · 许可 Apache-2.0 · v1.1 Step2</p>
+      <p><strong>no-facts：</strong>本 Demo 的输入意图可为练习样例；ICS 读写是真的（文件解析/导出），但<strong>不</strong>等于已写入系统日历或已接入 Rinx 宿主。勿对外声称「已改 Apple 日历 / 已接宿主授权」。</p>
+      <p>作者：刘磊（mandolin · GitHub <a href="https://github.com/bob0627">@bob0627</a>，个人参赛）· 宿主目标：<a href="https://github.com/hagency-org/Rinx">hagency-org/Rinx</a>（原名 robrix2，尚未接入）· 许可 Apache-2.0 · v1.1 Step2</p>
     </footer>
   </div>
   <script src="js/calendar-ics.js"></script>

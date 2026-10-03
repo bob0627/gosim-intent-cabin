@@ -1,0 +1,10 @@
+# gitleaks 配置：沿用默认规则，只放行已人工核对的误报
+# 早期提交里 js/app.js 的 localStorage 命名空间常量（值为本地存储槽位名）
+# 会被 generic-api-key 规则误判；它不是凭据。当前代码已改名为 STATE_SLOT。
+[extend]
+useDefault = true
+
+[allowlist]
+description = "localStorage slot names (not credentials)"
+regexTarget = "match"
+regexes = ['''STORAGE_KEY\s*=\s*"gosim-intent-cabin-v1(\.1)?"''']

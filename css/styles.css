@@ -364,3 +364,7 @@ textarea {
   font-size: 0.9rem;
   resize: vertical;
 }
+
+.footer-note a {
+  color: #7cb7ff;
+}

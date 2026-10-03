@@ -4,13 +4,13 @@
  *   - 练习 JSON 模式：localStorage
  *   - ICS 真日历模式：解析 data/hyrox-training.ics → 确认后生成更新 ICS 可下载
  * 失败态：拒绝、过期、写冲突
- * 未接：系统 Calendar.app API、robrix2 宿主授权卡
+ * 未接：系统 Calendar.app API、Rinx（原名 robrix2）宿主授权卡
  */
 (function () {
   "use strict";
 
-  const STORAGE_KEY = "gosim-intent-cabin-v1.1";
-  const MODE_KEY = "gosim-intent-cabin-mode";
+  const STATE_SLOT = "gosim-intent-cabin-v1.1";
+  const MODE_SLOT = "gosim-intent-cabin-mode";
   const PROPOSAL_TTL_MS = 90 * 1000;
   const ICS_PATH = "data/hyrox-training.ics";
   const JSON_PATH = "data/schedule.json";
@@ -54,7 +54,7 @@
 
   function loadMode() {
     try {
-      const m = localStorage.getItem(MODE_KEY);
+      const m = localStorage.getItem(MODE_SLOT);
       if (m === "json" || m === "ics") return m;
     } catch (_) {}
     return "ics";
@@ -62,13 +62,13 @@
 
   function saveMode() {
     try {
-      localStorage.setItem(MODE_KEY, mode);
+      localStorage.setItem(MODE_SLOT, mode);
     } catch (_) {}
   }
 
   function loadState() {
     try {
-      const raw = localStorage.getItem(STORAGE_KEY);
+      const raw = localStorage.getItem(STATE_SLOT);
       if (raw) return JSON.parse(raw);
     } catch (_) {}
     return blankState();
@@ -89,7 +89,7 @@
   function saveState() {
     state.modeAtSave = mode;
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      localStorage.setItem(STATE_SLOT, JSON.stringify(state));
     } catch (_) {}
   }
 
@@ -175,7 +175,8 @@
       if (Date.now() >= state.proposalExpiresAt) {
         expireProposal("提案已过期（未在有效期内确认）");
       } else {
-        renderProposal();
+        // 只刷新倒计时，不整卡重绘：避免每秒把用户正在编辑的日期/时间覆盖回提案值
+        renderTtl();
       }
     };
     expireTimer = setInterval(tick, 1000);
@@ -341,7 +342,7 @@
     clearExpireWatch();
     lastIcsText = null;
     try {
-      localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(STATE_SLOT);
     } catch (_) {}
     state = blankState();
     state.events = cloneEvents();
@@ -638,6 +639,21 @@
     }
   }
 
+  function renderTtl() {
+    const ttl = $("#ttl-info");
+    if (!ttl) return;
+    if (state.phase === "proposed" && state.proposalExpiresAt) {
+      const left = Math.max(
+        0,
+        Math.ceil((state.proposalExpiresAt - Date.now()) / 1000)
+      );
+      ttl.textContent = `提案剩余有效时间：${left}s`;
+      ttl.classList.remove("hidden");
+    } else {
+      ttl.classList.add("hidden");
+    }
+  }
+
   function renderProposal() {
     const box = $("#proposal-card");
     const actions = $("#proposal-actions");
@@ -714,17 +730,7 @@
     pill.className = `status-pill ${cls}`;
     pill.textContent = label;
 
-    const ttl = $("#ttl-info");
-    if (state.phase === "proposed" && state.proposalExpiresAt) {
-      const left = Math.max(
-        0,
-        Math.ceil((state.proposalExpiresAt - Date.now()) / 1000)
-      );
-      ttl.textContent = `提案剩余有效时间：${left}s`;
-      ttl.classList.remove("hidden");
-    } else {
-      ttl.classList.add("hidden");
-    }
+    renderTtl();
 
     const canEdit = state.phase === "proposed";
     actions.classList.toggle("hidden", !canEdit);
