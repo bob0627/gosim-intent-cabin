@@ -16,6 +16,10 @@
 
 ![提案卡](docs/screenshots/02-proposal-card.png)
 
+## 在线体验
+
+直接打开 **[https://bob0627.github.io/gosim-intent-cabin/](https://bob0627.github.io/gosim-intent-cabin/)**（GitHub Pages 托管，免安装，也可作为 Rinx 网页卡片的 URL）。
+
 ## 快速启动
 
 ```bash

@@ -15,7 +15,7 @@
 | 数据来源、权限、隐私说明 | 本文 §5、§6 |
 | 任务演示与复现证据 | 本文 §2–§4、§8；`docs/screenshots/`、`docs/demo/intent-cabin-demo.mp4`、`docs/evidence/` |
 | 已报名成员名单 | 本文 §7 |
-| 网页小程序：源码、可运行页面、URL 卡片 | 源码即本仓；本地 `python3 -m http.server 8877`；URL 卡片见 §10 |
+| 网页小程序：源码、可运行页面、URL 卡片 | 源码即本仓；在线 https://bob0627.github.io/gosim-intent-cabin/ ，本地 `python3 -m http.server 8877`；URL 卡片见 §10 |
 
 ## 1. 场景说明
 
@@ -124,7 +124,7 @@ Rinx（原名 robrix2）的网页卡片可以分享一个 **HTTP(S) 地址**，�
 | 标题 | 训练日程意图舱 · Agentic 改期卡 |
 | 描述 | 意图 → 提案 → 授权 → 写回 ICS → 核验；含拒绝/过期/冲突失败态。练习数据，未接系统日历。 |
 | 图标 | `assets/icon-512.png`（512×512），矢量版 `assets/icon.svg` |
-| URL | 部署后的 HTTPS 地址，例如启用 GitHub Pages 后为 `https://bob0627.github.io/gosim-intent-cabin/`（**截至本文撰写尚未部署**） |
+| URL | `https://bob0627.github.io/gosim-intent-cabin/`（GitHub Pages，已上线） |
 | 本地 URL | `http://127.0.0.1:8877/`（仅本机演示） |
 
 `index.html` 已包含 `og:title` / `og:description` / `og:image` 元信息，便于生成卡片预览。由于本作品没有接入宿主授权能力，卡片中的「确认 / 拒绝」仍是页面自身的授权流程。
