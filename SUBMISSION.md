@@ -3,7 +3,7 @@
 > GOSIM Agentic App 2026 · 初赛（截止 2026-10-04 23:59 北京时间）  
 > 场景：OctoSense **03 日历**（发现冲突、提出替代、区分待确认与已落实）· 实现深度：**02 帝王蟹意向（ICS 真读写）**  
 > 作者：刘磊（mandolin）· GitHub [@bob0627](https://github.com/bob0627) · 个人参赛  
-> 许可：Apache-2.0 · 宿主目标：[hagency-org/Rinx](https://github.com/hagency-org/Rinx)（原名 robrix2，**尚未接入**）
+> 许可：Apache-2.0 · 宿主：[hagency-org/Rinx](https://github.com/hagency-org/Rinx)（原名 robrix2）· **网页卡片级：已实测在 Rinx `f18869e` 中分享并打开；宿主授权卡未接入**
 
 ## 0. 提交清单（对照官网要求）
 
@@ -13,9 +13,9 @@
 | 宿主版本、支持平台、启动说明 | `README.md`「宿主版本」「支持平台」「快速启动」；`env-notes.md` |
 | 功能描述、图标、截图、作者与支持方式 | `README.md`；`assets/icon.svg`、`assets/icon-512.png`；`docs/screenshots/`；GitHub Issues |
 | 数据来源、权限、隐私说明 | 本文 §5、§6 |
-| 任务演示与复现证据 | 本文 §2–§4、§8；`docs/screenshots/`、`docs/demo/intent-cabin-demo.mp4`、`docs/evidence/` |
+| 任务演示与复现证据 | 本文 §2–§4、§8；`docs/screenshots/`、`docs/demo/intent-cabin-demo.mp4`、`docs/evidence/`；Rinx 网页卡片实测见 `docs/rinx-url-card.md` |
 | 已报名成员名单 | 本文 §7 |
-| 网页小程序：源码、可运行页面、URL 卡片 | 源码即本仓；在线 https://bob0627.github.io/gosim-intent-cabin/ ，本地 `python3 -m http.server 8877`；URL 卡片见 §10 |
+| 网页小程序：源码、可运行页面、URL 卡片 | 源码即本仓；在线 https://bob0627.github.io/gosim-intent-cabin/ ，本地 `python3 -m http.server 8877`；URL 卡片见 §10，Rinx 实测截图 `docs/screenshots/rinx-01–04` |
 
 ## 1. 场景说明
 
@@ -79,7 +79,7 @@
 - **不联网**：除同目录静态文件外不发起任何网络请求；无统计、无第三方脚本、无 CDN、无账号。
 - **本地存储**：只在浏览器 `localStorage` 保存演示状态与模式（键 `gosim-intent-cabin-v1.1`、`gosim-intent-cabin-mode`），点「重置 Demo」或清理浏览器数据即可删除。
 - **用户文件**：导入的 `.ics` 只在当前页面内存解析，不上传、不持久化；导出文件由浏览器下载到用户本机。
-- **在 Rinx 中以网页卡片打开时**：按官网说明，网页卡片**不会**因此获得聊天记录或账号权限；本页也不请求这些数据。
+- **在 Rinx 中以网页卡片打开时**：网页卡片**不会**因此获得聊天记录或账号权限（官网说明；Rinx 卡片消息只含标题和网址，见 `docs/evidence/rinx-mini-app-event.json`）；本页也不请求这些数据。
 
 ## 7. 成员名单
 
@@ -107,7 +107,8 @@ python3 -m http.server 8877
 
 ## 9. 已知限制
 
-- **未接 Rinx 宿主**：没有编译进 Rinx，没有调用 Rinx 授权卡、日历或消息 API；授权卡是网页内模拟。
+- **Rinx 只到网页卡片层**：已实测可在 Rinx 中以 URL 卡片分享并打开；但没有编译进 Rinx，没有调用 Rinx 授权卡、日历或消息 API；授权卡是网页内模拟。
+- **Linux 上不内嵌**：Linux 版 Rinx 的小程序面板不内嵌网页，需点 Open in browser 用系统浏览器打开；macOS / iOS 的面板内嵌（系统 WebKit）未实测。
 - **不改系统日历**：写回产物是 `.ics` 文件，需要用户手动导入日历应用。
 - **意图解析是规则**：针对样例消息的关键词规则，不调用大模型；对任意自由文本的泛化有限，未命中时使用默认提案。
 - **只处理一个目标事件**：当前固定匹配「间歇跑」（`evt-thu-intervals`）；不支持多事件批量改期。
@@ -119,6 +120,21 @@ python3 -m http.server 8877
 
 Rinx（原名 robrix2）的网页卡片可以分享一个 **HTTP(S) 地址**，在聊天中以卡片形式打开网页小程序；页面不会因此获得聊天记录或账号权限。
 
+### 10.1 实测：在 Rinx 中打开（2026-10-04）
+
+| 项 | 结果 |
+|---|---|
+| Rinx 版本 | `hagency-org/Rinx` `main` @ `f18869e4674fb8ffb666b424879ab820d114e432`（v1.1.0，`cargo build --locked --release`） |
+| 平台 | Debian 13 x86_64，X11 桌面；本机临时 Synapse 测试服务器 + 两个本地测试账号 |
+| 分享 | 聊天输入栏 **⊕ → Share mini app**，填在线地址与标题后发送 → 时间线出现 Mini app 卡片 |
+| 打开 | 点卡片 → Rinx 小程序面板（标题、Shared link、Open in browser）→ 点 **Open in browser** → 系统浏览器打开作品页面 |
+| 卡片消息 | `msgtype: rs.robius.robrix.mini_app`，内容只有 `version` / `title` / `url`，见 `docs/evidence/rinx-mini-app-event.json` |
+| 截图 | `docs/screenshots/rinx-01-share-mini-app.png`、`rinx-02-card-in-chat.png`、`rinx-03-card-opened.png`、`rinx-04-open-in-browser.png` |
+| 复现 | `docs/rinx-url-card.md`（含构建命令、本地服务器与 `tools/rinx-local-seed.py`） |
+| 未覆盖 | macOS / iOS 面板内嵌 WebKit 显示未实测；Rinx 宿主授权卡、日历 API 未接入 |
+
+### 10.2 卡片字段
+
 | 卡片字段 | 值 |
 |---|---|
 | 标题 | 训练日程意图舱 · Agentic 改期卡 |
@@ -127,4 +143,4 @@ Rinx（原名 robrix2）的网页卡片可以分享一个 **HTTP(S) 地址**，�
 | URL | `https://bob0627.github.io/gosim-intent-cabin/`（GitHub Pages，已上线） |
 | 本地 URL | `http://127.0.0.1:8877/`（仅本机演示） |
 
-`index.html` 已包含 `og:title` / `og:description` / `og:image` 元信息，便于生成卡片预览。由于本作品没有接入宿主授权能力，卡片中的「确认 / 拒绝」仍是页面自身的授权流程。
+Rinx 的 Mini app 卡片目前只使用标题和网址（实测时卡片显示标题与来源 `https://bob0627.github.io`），描述和图标用于其他平台的链接预览：`index.html` 已包含 `og:title` / `og:description` / `og:image` 元信息。由于本作品没有接入宿主授权能力，卡片中的「确认 / 拒绝」仍是页面自身的授权流程。

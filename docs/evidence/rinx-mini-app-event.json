@@ -1,0 +1,14 @@
+{
+  "_note": "Matrix event content sent by Rinx f18869e (Share mini app) on a local test homeserver, read back via /messages on 2026-10-04 17:32 (Beijing). Sender @demo:localhost is a local throwaway test account.",
+  "type": "m.room.message",
+  "sender": "@demo:localhost",
+  "content": {
+    "msgtype": "rs.robius.robrix.mini_app",
+    "body": "[Mini app] 训练日程意图舱 · Agentic 改期卡\nhttps://bob0627.github.io/gosim-intent-cabin/",
+    "mini_app": {
+      "version": 1,
+      "title": "训练日程意图舱 · Agentic 改期卡",
+      "url": "https://bob0627.github.io/gosim-intent-cabin/"
+    }
+  }
+}

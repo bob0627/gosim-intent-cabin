@@ -5,7 +5,7 @@
 > **v1.1 / Step2（帝王蟹意向 · ICS 能力）** · OctoSense 场景 **03 日历**  
 > 作者：**刘磊（mandolin）** · GitHub [@bob0627](https://github.com/bob0627) · 个人参赛  
 > 许可：**Apache-2.0**（`SPDX-License-Identifier: Apache-2.0`）· Copyright 2026 刘磊 / mandolin  
-> 宿主目标：[hagency-org/Rinx](https://github.com/hagency-org/Rinx)（**原名 robrix2**）· **当前为独立网页 Demo，尚未接入 Rinx 宿主授权卡**  
+> 宿主：[hagency-org/Rinx](https://github.com/hagency-org/Rinx)（**原名 robrix2**）· **已实测可在 Rinx（`f18869e`）中以网页卡片（URL 卡片）分享并打开；尚未接入 Rinx 宿主授权卡**  
 > 初赛截止：2026-10-04 23:59（北京时间）· 提交材料见 [SUBMISSION.md](SUBMISSION.md)
 
 ## 一句话
@@ -18,7 +18,9 @@
 
 ## 在线体验
 
-直接打开 **[https://bob0627.github.io/gosim-intent-cabin/](https://bob0627.github.io/gosim-intent-cabin/)**（GitHub Pages 托管，免安装，也可作为 Rinx 网页卡片的 URL）。
+直接打开 **[https://bob0627.github.io/gosim-intent-cabin/](https://bob0627.github.io/gosim-intent-cabin/)**（GitHub Pages 托管，免安装）。同一地址已在 Rinx 中作为网页卡片分享并打开，见 [docs/rinx-url-card.md](docs/rinx-url-card.md)。
+
+![Rinx 聊天中的网页卡片](docs/screenshots/rinx-02-card-in-chat.png)
 
 ## 快速启动
 
@@ -37,10 +39,10 @@ python3 -m http.server 8877
 
 | 项 | 说明 |
 |---|---|
-| 运行形态 | 静态网页（HTML/CSS/原生 JS），可作为 Rinx 的**网页卡片（URL 卡片）**分享 |
+| 运行形态 | 静态网页（HTML/CSS/原生 JS）；已实测作为 Rinx 的**网页卡片（URL 卡片）**分享并打开 |
 | 浏览器 | 近两年的 Chrome / Edge / Firefox / Safari（桌面与移动端）；需支持 ES2017、`localStorage`、`Blob` 下载 |
 | 操作系统 | macOS / Windows / Linux / iOS / Android（浏览器内运行，不依赖操作系统 API） |
-| 已实测 | Debian 13 x86_64 + Chromium 151（Playwright headless），见 `docs/screenshots/` |
+| 已实测 | Debian 13 x86_64 + Chromium 151（Playwright headless），见 `docs/screenshots/01–06`；Debian 13 x86_64 + Rinx `f18869e` 网页卡片 → Google Chrome，见 `docs/screenshots/rinx-01–04` |
 | 本地服务 | Python 3.8+ `http.server`（仅用于提供静态文件） |
 
 ## 宿主版本（Rinx）
@@ -48,9 +50,10 @@ python3 -m http.server 8877
 | 项 | 状态 |
 |---|---|
 | 宿主仓库 | [hagency-org/Rinx](https://github.com/hagency-org/Rinx)（原名 robrix2；更早的上游为 `OctoSense-org/robrix2`） |
-| 参考提交 | `main` @ `9b5e570aa7e6c845d02d768efdf72d1308fc7849`（2026-10-03 07:40 北京时间）；上游暂无 Release 标签 |
+| 实测提交 | `main` @ `f18869e4674fb8ffb666b424879ab820d114e432`（2026-10-04 14:22 北京时间，`Cargo.toml` 版本 1.1.0）；上游暂无 Release 标签。此前文档参考过 `9b5e570` |
 | 宿主构建要求 | Rust 1.98.0（仓库 pin）+ CMake；macOS 产物为 `Rinx.app`，可执行文件 `rinx` |
-| 本作品与宿主的关系 | **未编译进 Rinx、未调用 Rinx 的授权卡 / 日历 API**。本仓是独立网页 Demo；计划通过 Rinx 的网页卡片（HTTP(S) URL）分享打开，见 [SUBMISSION.md § URL 卡片](SUBMISSION.md#10-url-卡片说明) |
+| 本作品与宿主的关系 | **网页卡片（URL 卡片）级接入，已实测**：在 Linux 上构建运行 Rinx `f18869e`，用聊天输入栏「⊕ → Share mini app」把在线地址发成 Mini app 卡片，聊天中显示卡片、点开进入 Rinx 小程序面板，再点 **Open in browser** 打开作品页面。截图与复现步骤见 [docs/rinx-url-card.md](docs/rinx-url-card.md) |
+| 未接入部分 | **未编译进 Rinx、未调用 Rinx 的授权卡 / 日历 / 消息 API**；页面拿不到聊天记录或账号；授权仍是页面内「确认 / 拒绝」。Linux 版 Rinx 不内嵌网页（需点 Open in browser）；macOS / iOS 的面板内嵌 WebKit 显示**未实测** |
 
 详见 [env-notes.md](env-notes.md)。
 
@@ -58,14 +61,14 @@ python3 -m http.server 8877
 
 | 层 | 真实能力（已实现） | 练习数据 / 概念演示 | 未接入（勿宣称） |
 |---|---|---|---|
-| 输入事件 | 可粘贴任意文本 | 教练消息是**练习样例**；解析为关键词规则 | 真实 IM / 邮件 / Matrix / Rinx 入站 |
+| 输入事件 | 可粘贴任意文本 | 教练消息是**练习样例**；解析为关键词规则 | 真实 IM / 邮件 / Matrix / Rinx 消息读入页面 |
 | 读日程 | **真**：解析 `data/hyrox-training.ics`（RFC 5545 VEVENT 子集）；可导入用户自己的 `.ics` | 训练日程内容为虚构 | 系统 Calendar.app / 原生日历读取 API |
 | 冲突检测 | **真**：按同日时间段重叠计算 | — | — |
 | 授权 | 页内「确认 / 拒绝」+ 90 秒有效期 | 授权卡是网页内模拟 | **Rinx 宿主授权卡** |
 | 写日程 | **真**：生成更新后的 `.ics` 并下载（UID 稳定、DTSTART/DTEND 更新、SUMMARY 保留） | 练习 JSON 模式写 `localStorage` | 直接改系统日历；需用户手动导入 `.ics` |
 | 核验 | 结果面板 + 审计日志 + 下载文件可比对 | — | — |
 
-**不得**据此宣称「已写入系统日历」或「已接入 Rinx / robrix2」。
+**不得**据此宣称「已写入系统日历」或「已接入 Rinx 授权卡 / 宿主 API」。可以说的是：「可在 Rinx 中以网页卡片分享并打开（已实测，Linux 上经 Open in browser 打开）」。
 
 ## 演示脚本（约 3 分钟）
 
@@ -107,9 +110,11 @@ gosim-intent-cabin/
 ├── data/hyrox-training.ics  # 默认日程源（RFC 5545，练习数据）
 ├── data/schedule.json       # Step1 练习 JSON
 ├── assets/icon.svg, icon-512.png
-├── docs/screenshots/        # 关键流程截图（01–06）
+├── docs/screenshots/        # 关键流程截图（01–06）+ Rinx 网页卡片截图（rinx-01–04）
+├── docs/rinx-url-card.md    # 在 Rinx 中以网页卡片打开的实测记录与复现步骤
+├── tools/rinx-local-seed.py # 本地测试 Matrix 服务器建群 / 发卡片脚本（复现用）
 ├── docs/demo/               # 演示短视频（MP4）
-├── docs/evidence/           # 写回后的 ICS、diff、审计日志
+├── docs/evidence/           # 写回后的 ICS、diff、审计日志、Rinx 卡片消息内容
 ├── docs/demo-script.md      # 60–90 秒视频分镜
 ├── SUBMISSION.md            # 初赛提交说明
 ├── AGENTS.md                # 架构与数据边界
