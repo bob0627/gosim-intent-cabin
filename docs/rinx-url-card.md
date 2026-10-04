@@ -19,6 +19,7 @@
 
 | # | 内容 | 文件 |
 |---|---|---|
+| 0 | Rinx 群聊中的教练改期消息（2026-10-04 22:17 补拍，用于视频） | [`screenshots/rinx-00-coach-message.png`](screenshots/rinx-00-coach-message.png) |
 | 1 | Rinx「Share mini app」表单：网址 + 标题，发往「HYROX 训练营」 | [`screenshots/rinx-01-share-mini-app.png`](screenshots/rinx-01-share-mini-app.png) |
 | 2 | 聊天中：教练改期消息 + 作品的 Mini app 卡片 | [`screenshots/rinx-02-card-in-chat.png`](screenshots/rinx-02-card-in-chat.png) |
 | 3 | 点开卡片后的 Rinx 小程序面板（Linux：提示用 Open in browser） | [`screenshots/rinx-03-card-opened.png`](screenshots/rinx-03-card-opened.png) |

@@ -113,9 +113,10 @@ gosim-intent-cabin/
 ├── docs/screenshots/        # 关键流程截图（01–06）+ Rinx 网页卡片截图（rinx-01–04）
 ├── docs/rinx-url-card.md    # 在 Rinx 中以网页卡片打开的实测记录与复现步骤
 ├── tools/rinx-local-seed.py # 本地测试 Matrix 服务器建群 / 发卡片脚本（复现用）
-├── docs/demo/               # 演示短视频（MP4）
+├── tools/remake-demo-video.py # 拼接演示视频（网页录屏 + Rinx 截图 + 字幕）
+├── docs/demo/               # 演示短视频（MP4，约 98 秒，含 Rinx 网页卡片段）
 ├── docs/evidence/           # 写回后的 ICS、diff、审计日志、Rinx 卡片消息内容
-├── docs/demo-script.md      # 60–90 秒视频分镜
+├── docs/demo-script.md      # 视频分镜
 ├── SUBMISSION.md            # 初赛提交说明
 ├── AGENTS.md                # 架构与数据边界
 ├── env-notes.md             # Rinx（原 robrix2）宿主环境结论

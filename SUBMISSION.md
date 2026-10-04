@@ -103,7 +103,7 @@ python3 -m http.server 8877
 4. **写冲突**：重置 Demo → 解析意图 → 日期改 2026-09-30、星期改周三、时间 18:30–19:45 → 应用修改 → 确认 → 提示冲突、未写入。
 5. **导入**：导入任意含 `VEVENT` 的 `.ics`，日程列表随之更新。
 
-截图由 Playwright（Chromium headless）在 `127.0.0.1:8877` 自动生成，见 `docs/screenshots/01–06`；演示视频见 `docs/demo/intent-cabin-demo.mp4`（1280×800、无声、带中文字幕，约 80 秒；由 Playwright 无头录制）。
+截图由 Playwright（Chromium headless）在 `127.0.0.1:8877` 自动生成，见 `docs/screenshots/01–06`；演示视频见 `docs/demo/intent-cabin-demo.mp4`（1280×800、无声、带中文字幕，约 98 秒）：0:05–0:23 为 Rinx 网页卡片实测截图段（`docs/screenshots/rinx-00–04`），其余为 Playwright 无头录制的网页闭环；由 `tools/remake-demo-video.py` 拼接，分镜见 `docs/demo-script.md`。
 
 ## 9. 已知限制
 
